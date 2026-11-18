@@ -28,6 +28,9 @@ Tested against a SuperMini nRF52840 running the **nice!nano UF2 bootloader
 - Live capture confirmed advertisements on channels 37, 38 and 39, with both
   CRC-good and CRC-error frames and RSSI in the -96..-53 dBm range.
 - Recorded pcap validates as link type 256 with correct AA and CRC flags.
+- Wireshark 4.6.9 decodes the stream directly (`tshark -i <extcap>`), showing
+  channel, RSSI, PDU type and advertiser address. Capture included `ADV_IND`,
+  `ADV_NONCONN_IND`, `SCAN_REQ` and `ADV_EXT_IND` (PDU type 0x07).
 
 ## Requirements
 
@@ -89,6 +92,23 @@ west flash -d "$env:LOCALAPPDATA\ble-sniffer-build\build\promicro_nrf52840_nrf52
 ```
 
 This copies the extcap into `%APPDATA%\Wireshark\extcap` and installs `pyserial`.
+
+#### No administrator rights?
+
+The official Wireshark MSI requires elevation (`msiexec` returns 1603 without
+it). Extcap capture does **not** need Npcap, so Wireshark can be laid out
+per-user instead:
+
+```powershell
+.\scripts\extract-wireshark.ps1 -Msi "$env:TEMP\Wireshark-4.6.9-x64.msi"
+```
+
+The script reads the MSI tables read-only, unpacks the cabinets, and writes a
+run-from-anywhere copy to `%LOCALAPPDATA%\Wireshark\Wireshark`. Launch
+`Wireshark.exe` from there.
+
+Limitation: without Npcap you cannot capture native Ethernet/Wi-Fi interfaces,
+but extcap sources (this sniffer) work normally.
 
 ### 4. Capture
 
