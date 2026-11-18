@@ -4,6 +4,8 @@ build-*/
 *.hex
 *.bin
 *.map
+*.pcap
+*.pcapng
 __pycache__/
 *.py[cod]
 .venv/

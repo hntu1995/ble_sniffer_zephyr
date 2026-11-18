@@ -12,9 +12,22 @@ CRC status.
 ## Status
 
 - Firmware builds for `promicro_nrf52840/nrf52840/uf2` with Zephyr 4.3.99.
-- Host protocol and pcap writer are unit-tested (13 tests).
+- Host protocol and pcap writer are unit-tested (14 tests).
 - Connection following (data channels) is **not** implemented yet; the capture
   of CONNECT_IND is the input for that next step.
+
+### Verified on hardware
+
+Tested against a SuperMini nRF52840 running the **nice!nano UF2 bootloader
+0.6.0** (SoftDevice S140 6.1.1):
+
+- Partition layout: SoftDevice `0x0-0x26000`, application `0x26000-0xEC000`,
+  UF2 bootloader at `0xF4000`. The UF2 image is written at `0x26000`, which
+  matches this bootloader exactly.
+- Enumerates as USB serial `VID 0x2FE3 / PID 0x0008`.
+- Live capture confirmed advertisements on channels 37, 38 and 39, with both
+  CRC-good and CRC-error frames and RSSI in the -96..-53 dBm range.
+- Recorded pcap validates as link type 256 with correct AA and CRC flags.
 
 ## Requirements
 
