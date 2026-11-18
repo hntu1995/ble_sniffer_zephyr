@@ -1,0 +1,15 @@
+/*
+ * Keep the console off the CDC-ACM port that carries binary sniffer frames.
+ * UART0 is broken out on the SuperMini (TX P0.09, RX P0.10).
+ */
+
+/ {
+	chosen {
+		zephyr,console = &uart0;
+	};
+
+	aliases {
+		/* Provided by the board's boards/common/usb/cdc_acm_serial.dtsi */
+		sniffer-uart = &board_cdc_acm_uart;
+	};
+};

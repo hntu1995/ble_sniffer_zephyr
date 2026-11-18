@@ -1,0 +1,11 @@
+build/
+build-*/
+*.uf2
+*.hex
+*.bin
+*.map
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.vscode/
